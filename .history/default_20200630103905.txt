@@ -1,0 +1,4 @@
+US East (N. Virginia)us-east-1
+Amazon Machine Image - ami-09d95fab7fff3776c
+Instance Type - t2.micro
+VPC id - vpc-922f2ce8
