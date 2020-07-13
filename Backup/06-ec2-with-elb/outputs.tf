@@ -7,5 +7,5 @@ output "http_server_public_dns" {
 }
 
 output "elb_public_dns" {
-    value = aws_elb.elb
+  value = aws_elb.elb
 }

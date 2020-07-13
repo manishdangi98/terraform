@@ -38,7 +38,7 @@ resource "aws_security_group" "http_server_sg" {
   }
 }
 resource "aws_security_group" "elb_sg" {
-  name = "elb_sg"
+  name   = "elb_sg"
   vpc_id = aws_default_vpc.default.id
 
   ingress {
@@ -64,17 +64,17 @@ resource "aws_security_group" "elb_sg" {
 }
 
 resource "aws_elb" "elb" {
-    name = "elb"
-    subnets = data.aws_subnet_ids.default_subnets.ids
-    security_groups = [aws_security_group.elb_sg.id]
-    instances = values(aws_instance.http_servers).*.id
+  name            = "elb"
+  subnets         = data.aws_subnet_ids.default_subnets.ids
+  security_groups = [aws_security_group.elb_sg.id]
+  instances       = values(aws_instance.http_servers).*.id
 
-    listener {
-        instance_port = 80
-        instance_protocol = "http"
-        lb_port = 80
-        lb_protocol = "http"
-    } 
+  listener {
+    instance_port     = 80
+    instance_protocol = "http"
+    lb_port           = 80
+    lb_protocol       = "http"
+  }
 }
 
 resource "aws_instance" "http_servers" {
@@ -85,11 +85,11 @@ resource "aws_instance" "http_servers" {
   vpc_security_group_ids = [aws_security_group.http_server_sg.id]
 
   //subnet_id              = "subnet-3f7b2563"
-  for_each = data.aws_subnet_ids.default_subnets.ids
+  for_each  = data.aws_subnet_ids.default_subnets.ids
   subnet_id = each.value
 
   tags = {
-      name : "http_server_${each.value}"
+    name : "http_server_${each.value}"
   }
 
   connection {
